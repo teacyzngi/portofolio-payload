@@ -22,6 +22,7 @@
     "sharp": "^0.34.4"
   },
   "devDependencies": {
+    "@rushstack/eslint-patch": "^1.14.1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
