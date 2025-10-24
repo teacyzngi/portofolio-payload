@@ -48,7 +48,7 @@ export default buildConfig({
         // Opsi ini penting agar URL yang dihasilkan oleh Payload benar
         forcePathStyle: true,
       },
-      bucket: process.env.S3_BUCKET,
+      bucket: process.env.S3_BUCKET!,
     }),
   ],
   sharp,
