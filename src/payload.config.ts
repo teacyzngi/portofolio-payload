@@ -6,7 +6,6 @@ import { buildConfig } from "payload";
 import { Papers } from "./collections/Paper";
 import { Media } from "./collections/Media";
 
-
 export default buildConfig({
   // If you'd like to use Rich Text, pass your editor here
   editor: lexicalEditor(),
@@ -19,7 +18,7 @@ export default buildConfig({
   // Untuk koneksi ke Database
   db: postgresAdapter({
     pool: {
-      connectionString: process.env.DATABASE_URL,
+      connectionString: process.env.DATABASE_URL || '',
       ssl: {
         rejectUnauthorized: true,
         ca: process.env.SSL_CA,
@@ -33,23 +32,23 @@ export default buildConfig({
         media: {
           prefix: "custom-prefix",
           signedDownloads: {
-            shouldUseSignedURL: ({ collection, filename, req }) => {
+            shouldUseSignedURL: ({ collection, filename, req }: { collection: any; filename: string; req: any }) => {
               return filename.endsWith(".mp4");
             },
           },
         },
       },
       config: {
-        endpoint: process.env.S3_ENDPOINT,
+        endpoint: String(process.env.S3_ENDPOINT || ''),
         credentials: {
-          accessKeyId: process.env.S3_ACCESS_KEY_ID,
-          secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
+          accessKeyId: String(process.env.S3_ACCESS_KEY_ID || ''),
+          secretAccessKey: String(process.env.S3_SECRET_ACCESS_KEY || ''),
         },
-        region: process.env.S3_REGION,
+        region: String(process.env.S3_REGION || ''),
         // Opsi ini penting agar URL yang dihasilkan oleh Payload benar
         forcePathStyle: true,
       },
-      bucket: process.env.S3_BUCKET,
+      bucket: process.env.S3_BUCKET!,
     }),
   ],
   sharp,
